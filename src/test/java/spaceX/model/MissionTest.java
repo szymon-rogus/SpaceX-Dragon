@@ -2,7 +2,7 @@ package spaceX.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import spaceX.exception.AssignmentException;
+import spaceX.exception.SpaceException;
 import spaceX.status.MissionStatus;
 import spaceX.status.RocketStatus;
 
@@ -32,7 +32,7 @@ public class MissionTest {
 
         rocket.setStatus(RocketStatus.IN_SPACE);
 
-        Assert.assertThrows(AssignmentException.class, () -> {
+        Assert.assertThrows(SpaceException.class, () -> {
             mission.assignRocket(rocket);
         });
     }
@@ -44,7 +44,7 @@ public class MissionTest {
 
         rocket.setStatus(RocketStatus.IN_REPAIR);
 
-        Assert.assertThrows(AssignmentException.class, () -> {
+        Assert.assertThrows(SpaceException.class, () -> {
             mission.assignRocket(rocket);
         });
     }
@@ -68,7 +68,7 @@ public class MissionTest {
 
         mission.assignRocket(rocket1);
 
-        Assert.assertThrows(AssignmentException.class, () -> {
+        Assert.assertThrows(SpaceException.class, () -> {
             mission.unassignRocket(rocket2);
         });
     }
