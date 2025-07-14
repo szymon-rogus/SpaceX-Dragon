@@ -3,9 +3,17 @@ package spaceX.model;
 import org.junit.Assert;
 import org.junit.Test;
 import spaceX.exception.AssignmentException;
+import spaceX.status.MissionStatus;
 import spaceX.status.RocketStatus;
 
 public class MissionTest {
+
+    @Test
+    public void testInitialStatus() {
+        Mission mission = new Mission("Pluto");
+
+        Assert.assertEquals(MissionStatus.SCHEDULED, mission.getStatus());
+    }
 
     @Test
     public void testCorrectAssignment() {
