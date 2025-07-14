@@ -2,7 +2,7 @@ package spaceX.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import spaceX.exception.AssignmentException;
+import spaceX.exception.SpaceException;
 import spaceX.status.MissionStatus;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class Mission {
 
     public void assignRocket(Rocket rocket) {
         if (rocket.isAssigned()) {
-            throw new AssignmentException("ERROR: Rocket is already assigned to different mission!");
+            throw new SpaceException("ERROR: Rocket is already assigned to different mission!");
         }
         assignedRockets.add(rocket);
         /// More logic?
@@ -38,7 +38,7 @@ public class Mission {
 
     public void unassignRocket(Rocket rocket) {
         if (!assignedRockets.contains(rocket)) {
-            throw new AssignmentException("WARNING: Trying to unassign rocket which has not been assigned to this mission");
+            throw new SpaceException("WARNING: Trying to unassign rocket which has not been assigned to this mission");
         }
         /// More logic?
     }
