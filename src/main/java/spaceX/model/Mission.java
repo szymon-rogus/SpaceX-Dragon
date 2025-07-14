@@ -25,10 +25,12 @@ public class Mission {
 
     public void assignRocket(Rocket rocket) {
         rockets.add(rocket);
+        updateStatus();
     }
 
     public void unassignRocket(Rocket rocket) {
         rockets.remove(rocket);
+        updateStatus();
     }
 
     public void updateStatus() {
@@ -43,6 +45,11 @@ public class Mission {
         }
     }
 
+    public void endMission() {
+        rockets.clear();
+        setStatus(MissionStatus.ENDED);
+    }
+
     private boolean hasRocketsInRepair() {
         return rockets.stream().anyMatch(Rocket::inRepair);
     }
@@ -51,8 +58,17 @@ public class Mission {
         return rockets.size();
     }
 
+    public boolean hasEnded() {
+        return status == MissionStatus.ENDED;
+    }
+
     @Override
     public String toString() {
-        return name + " - " + status + " - Dragons: " + getRocketCount();
+        StringBuilder builder = new StringBuilder(name + " - " + status + " - Dragons: " + getRocketCount());
+        for (Rocket rocket : rockets) {
+            builder.append("\n\t").append(rocket);
+        }
+
+        return builder.toString();
     }
 }
