@@ -21,27 +21,49 @@ public class RocketTest {
     }
 
     @Test
-    public void testInSpaceAssigned() {
+    public void testAssignToMission() {
         Rocket rocket = new Rocket("Tiger");
-        rocket.setStatus(RocketStatus.IN_SPACE);
+        Mission mission = new Mission("MilkyWay");
+
+        rocket.assignToMission(mission);
 
         Assert.assertTrue(rocket.isAssigned());
+        Assert.assertEquals(mission, rocket.getMission());
     }
 
     @Test
-    public void testInRepairAssigned() {
-        Rocket rocket = new Rocket("Tiger");
-        rocket.setStatus(RocketStatus.IN_REPAIR);
+    public void testUnassignFromMission() {
+        Rocket rocket = new Rocket("Dragonfly 23");
+        Mission mission = new Mission("MilkyWay");
 
-        Assert.assertTrue(rocket.isAssigned());
+        rocket.assignToMission(mission);
+        rocket.unassignFromMission();
+
+        Assert.assertFalse(rocket.isAssigned());
+        Assert.assertNotEquals(mission, rocket.getMission());
     }
 
     @Test
-    public void testInRepair() {
+    public void testMoveToRepair() {
         Rocket rocket = new Rocket("Ares I");
-        rocket.setStatus(RocketStatus.IN_REPAIR);
+
+        Assert.assertFalse(rocket.inRepair());
+
+        rocket.moveToRepair();
 
         Assert.assertTrue(rocket.inRepair());
+    }
+
+    @Test
+    public void testMoveFromRepair() {
+        Rocket rocket = new Rocket("Ares I");
+
+        Assert.assertFalse(rocket.inRepair());
+
+        rocket.moveToRepair();
+        rocket.moveFromRepair();
+
+        Assert.assertFalse(rocket.inRepair());
     }
 
     @Test

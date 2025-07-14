@@ -22,10 +22,24 @@ public class Rocket {
 
     public void assignToMission(Mission mission) {
         this.mission = mission;
+        setStatus(RocketStatus.IN_SPACE);
     }
 
     public void unassignFromMission() {
         mission = null;
+        setStatus(RocketStatus.ON_GROUND);
+    }
+
+    public void moveToRepair() {
+        setStatus(RocketStatus.IN_REPAIR);
+    }
+
+    public void moveFromRepair() {
+        if (mission == null) {
+            setStatus(RocketStatus.ON_GROUND);
+        } else {
+            setStatus(RocketStatus.IN_SPACE);
+        }
     }
 
     public boolean isAssigned() {
