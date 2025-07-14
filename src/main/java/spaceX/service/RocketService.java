@@ -2,10 +2,11 @@ package spaceX.service;
 
 import lombok.Getter;
 import spaceX.exception.SpaceException;
+import spaceX.model.Mission;
 import spaceX.model.Rocket;
-import spaceX.status.RocketStatus;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -33,7 +34,23 @@ public class RocketService implements SpaceService<Rocket> {
         return rockets.get(name);
     }
 
-    public void changeRocketStatus(String rocketName, RocketStatus status) {
-        /// Few edge cases
+    public void assignToMission(Mission mission, Rocket rocket) {
+        rocket.assignToMission(mission);
+    }
+
+    public void unassignFromMission(Rocket rocket) {
+        rocket.unassignFromMission();
+    }
+
+    public void unassignFromMission(List<Rocket> rocket) {
+        rocket.forEach(this::unassignFromMission);
+    }
+
+    public void moveToRepair(Rocket rocket) {
+        rocket.moveToRepair();
+    }
+
+    public void moveFromRepair(Rocket rocket) {
+        rocket.moveFromRepair();
     }
 }

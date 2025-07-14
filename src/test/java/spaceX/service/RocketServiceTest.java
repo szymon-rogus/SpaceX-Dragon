@@ -3,9 +3,9 @@ package spaceX.service;
 import org.junit.Assert;
 import org.junit.Test;
 import spaceX.exception.SpaceException;
+import spaceX.model.Mission;
+import spaceX.model.Rocket;
 
-/// Currently the creation of rocket is going to be inside the "add" method in specific Service
-/// TODO: Consider the two "add" methods for String name and ready Rocket object
 public class RocketServiceTest {
 
     @Test
@@ -43,7 +43,6 @@ public class RocketServiceTest {
         service.add("Little Joe");
         service.add("Delta 4000");
 
-        /// Override equals in Rocket class?
         Assert.assertEquals("Delta 4000", service.get("Delta 4000").getName());
     }
 
@@ -54,5 +53,55 @@ public class RocketServiceTest {
         service.add("Delta L");
 
         Assert.assertThrows(SpaceException.class, () -> service.get("Delta M"));
+    }
+
+    @Test
+    public void testAssignToMission() {
+        RocketService service = new RocketService();
+        Mission mission = new Mission("Apollo 2");
+        Rocket rocket = new Rocket("Saturn V");
+
+        service.assignToMission(mission, rocket);
+
+        Assert.assertEquals(mission, rocket.getMission());
+        Assert.assertTrue(rocket.isAssigned());
+    }
+
+    @Test
+    public void testUnassignFromMission() {
+        RocketService service = new RocketService();
+        Mission mission = new Mission("Apollo 4");
+        Rocket rocket = new Rocket("Saturn VI");
+
+        service.assignToMission(mission, rocket);
+        service.unassignFromMission(rocket);
+
+        Assert.assertNotEquals(mission, rocket.getMission());
+        Assert.assertFalse(rocket.isAssigned());
+    }
+
+    @Test
+    public void testMoveToRepair() {
+        RocketService service = new RocketService();
+        Rocket rocket = new Rocket("Terran 1");
+
+        Assert.assertFalse(rocket.inRepair());
+
+        service.moveToRepair(rocket);
+
+        Assert.assertTrue(rocket.inRepair());
+    }
+
+    @Test
+    public void testMoveFromRepair() {
+        RocketService service = new RocketService();
+        Rocket rocket = new Rocket("Electron");
+
+        Assert.assertFalse(rocket.inRepair());
+
+        service.moveToRepair(rocket);
+        service.moveFromRepair(rocket);
+
+        Assert.assertFalse(rocket.inRepair());
     }
 }
