@@ -2,53 +2,57 @@ package spaceX.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import spaceX.exception.SpaceException;
 import spaceX.status.MissionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 public class Mission {
 
-    private String name;
+    private final String name;
 
+    @Setter
     private MissionStatus status;
 
-    private List<Rocket> assignedRockets;
+    private final List<Rocket> rockets;
 
     public Mission(String name) {
         this.name = name;
         status = MissionStatus.SCHEDULED;
-        assignedRockets = new ArrayList<>();
+        rockets = new ArrayList<>();
     }
 
     public void assignRocket(Rocket rocket) {
-        if (rocket.isAssigned()) {
-            throw new SpaceException("ERROR: Rocket is already assigned to different mission!");
-        }
-        assignedRockets.add(rocket);
-        /// More logic?
-    }
-
-    public void assignRockets(List<Rocket> rockets) {
-        rockets.forEach(this::assignRocket);
+        rockets.add(rocket);
     }
 
     public void unassignRocket(Rocket rocket) {
-        if (!assignedRockets.contains(rocket)) {
-            throw new SpaceException("WARNING: Trying to unassign rocket which has not been assigned to this mission");
+        rockets.remove(rocket);
+    }
+
+    public void updateStatus() {
+        if (status == MissionStatus.ENDED) return;
+
+        if (rockets.isEmpty()) {
+            status = MissionStatus.SCHEDULED;
+        } else if (hasRocketsInRepair()) {
+            status = MissionStatus.PENDING;
+        } else {
+            status = MissionStatus.IN_PROGRESS;
         }
-        /// More logic?
     }
 
-    public void unassignRocket(List<Rocket> rockets) {
-        rockets.forEach(this::unassignRocket);
+    private boolean hasRocketsInRepair() {
+        return rockets.stream().anyMatch(Rocket::inRepair);
     }
 
-    private void updateStatus() {
-        /// TODO: multiple edge cases, method called on every assigned rocket change
-        /// Implement observer?
+    public int getRocketCount() {
+        return rockets.size();
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + status + " - Dragons: " + getRocketCount();
     }
 }

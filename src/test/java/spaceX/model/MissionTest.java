@@ -2,9 +2,7 @@ package spaceX.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import spaceX.exception.SpaceException;
 import spaceX.status.MissionStatus;
-import spaceX.status.RocketStatus;
 
 public class MissionTest {
 
@@ -16,60 +14,56 @@ public class MissionTest {
     }
 
     @Test
-    public void testCorrectAssignment() {
+    public void testAssign() {
         Mission mission = new Mission("Apollo");
         Rocket rocket = new Rocket("Io");
 
         mission.assignRocket(rocket);
 
-        Assert.assertEquals(1, mission.getRockets().size());
+        Assert.assertEquals(1, mission.getRocketCount());
     }
 
     @Test
-    public void testFirstIncorrectAssignment() {
+    public void testMultipleAssign() {
         Mission mission = new Mission("Apollo");
-        Rocket rocket = new Rocket("Sputnik");
+        Rocket sputnik = new Rocket("Sputnik");
+        Rocket nike = new Rocket("Nike");
+        Rocket hopiDart = new Rocket("Hopi Dart");
 
-        rocket.setStatus(RocketStatus.IN_SPACE);
+        mission.assignRocket(sputnik);
+        mission.assignRocket(nike);
+        mission.assignRocket(hopiDart);
 
-        Assert.assertThrows(SpaceException.class, () -> {
-            mission.assignRocket(rocket);
-        });
+        Assert.assertEquals(3, mission.getRocketCount());
     }
 
     @Test
-    public void testSecondIncorrectAssignment() {
-        Mission mission = new Mission("Apollo");
-        Rocket rocket = new Rocket("Sputnik");
-
-        rocket.setStatus(RocketStatus.IN_REPAIR);
-
-        Assert.assertThrows(SpaceException.class, () -> {
-            mission.assignRocket(rocket);
-        });
-    }
-
-    @Test
-    public void testCorrectUnassignment() {
+    public void testUnassign() {
         Mission mission = new Mission("Transit");
-        Rocket rocket = new Rocket("Passenger");
+        Rocket passenger = new Rocket("Passenger");
 
-        mission.assignRocket(rocket);
-        mission.unassignRocket(rocket);
+        mission.assignRocket(passenger);
+
+        mission.unassignRocket(passenger);
 
         Assert.assertTrue(mission.getRockets().isEmpty());
     }
 
     @Test
-    public void testIncorrectUnassignment() {
+    public void testMultipleUnassign() {
         Mission mission = new Mission("Transit");
-        Rocket rocket1 = new Rocket("Passenger");
-        Rocket rocket2 = new Rocket("Nostradamus");
+        Rocket passenger = new Rocket("Passenger");
+        Rocket delta = new Rocket("Delta");
+        Rocket falcon = new Rocket("falcon");
 
-        mission.assignRocket(rocket1);
+        mission.assignRocket(passenger);
+        mission.assignRocket(delta);
+        mission.assignRocket(falcon);
 
-        Assert.assertThrows(SpaceException.class, () -> {
-            mission.unassignRocket(rocket2);
-        });
+        mission.unassignRocket(passenger);
+        mission.unassignRocket(delta);
+        mission.unassignRocket(falcon);
+
+        Assert.assertTrue(mission.getRockets().isEmpty());
     }
 }
