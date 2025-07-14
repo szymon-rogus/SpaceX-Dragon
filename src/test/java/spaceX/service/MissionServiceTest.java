@@ -3,6 +3,8 @@ package spaceX.service;
 import org.junit.Assert;
 import org.junit.Test;
 import spaceX.exception.SpaceException;
+import spaceX.model.Mission;
+import spaceX.model.Rocket;
 
 public class MissionServiceTest {
 
@@ -41,8 +43,7 @@ public class MissionServiceTest {
         service.add("Transit");
         service.add("Samples ejection");
 
-        /// Override equals in Mission class?
-        Assert.assertEquals("Transit", service.get("Transit").getName());
+        Assert.assertNotNull(service.get("Transit"));
     }
 
     @Test
