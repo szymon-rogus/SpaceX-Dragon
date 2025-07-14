@@ -22,7 +22,7 @@ public class MissionTest {
 
         mission.assignRocket(rocket);
 
-        Assert.assertEquals(1, mission.getAssignedRockets().size());
+        Assert.assertEquals(1, mission.getRockets().size());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class MissionTest {
         mission.assignRocket(rocket);
         mission.unassignRocket(rocket);
 
-        Assert.assertTrue(mission.getAssignedRockets().isEmpty());
+        Assert.assertTrue(mission.getRockets().isEmpty());
     }
 
     @Test
