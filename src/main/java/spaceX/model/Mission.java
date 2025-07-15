@@ -58,6 +58,18 @@ public class Mission {
         return rockets.size();
     }
 
+    public boolean isScheduled() {
+        return status == MissionStatus.SCHEDULED;
+    }
+
+    public boolean inProgress() {
+        return status == MissionStatus.IN_PROGRESS;
+    }
+
+    public boolean isPending() {
+        return status == MissionStatus.PENDING;
+    }
+
     public boolean hasEnded() {
         return status == MissionStatus.ENDED;
     }
