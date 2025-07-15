@@ -1,16 +1,14 @@
-package spaceX.service;
+package spaceX.repository;
 
 import org.junit.Assert;
 import org.junit.Test;
 import spaceX.exception.SpaceException;
-import spaceX.model.Mission;
-import spaceX.model.Rocket;
 
-public class MissionServiceTest {
+public class MissionRepositoryTest {
 
     @Test
     public void testCorrectAddMission() {
-        MissionService service = new MissionService();
+        MissionRepository service = new MissionRepository();
 
         Assert.assertTrue(service.getMissions().isEmpty());
 
@@ -23,7 +21,7 @@ public class MissionServiceTest {
 
     @Test
     public void testIncorrectAddMission() {
-        MissionService service = new MissionService();
+        MissionRepository service = new MissionRepository();
 
         Assert.assertTrue(service.getMissions().isEmpty());
 
@@ -38,7 +36,7 @@ public class MissionServiceTest {
 
     @Test
     public void testCorrectGetMission() {
-        MissionService service = new MissionService();
+        MissionRepository service = new MissionRepository();
         service.add("Earth seeing");
         service.add("Transit");
         service.add("Samples ejection");
@@ -48,7 +46,7 @@ public class MissionServiceTest {
 
     @Test
     public void testIncorrectGetMission() {
-        MissionService service = new MissionService();
+        MissionRepository service = new MissionRepository();
         service.add("Flowing");
         service.add("Horizontal Landing");
 

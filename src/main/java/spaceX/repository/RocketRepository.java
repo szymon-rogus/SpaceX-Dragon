@@ -1,20 +1,18 @@
-package spaceX.service;
+package spaceX.repository;
 
 import lombok.Getter;
 import spaceX.exception.SpaceException;
-import spaceX.model.Mission;
 import spaceX.model.Rocket;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
-public class RocketService implements SpaceService<Rocket> {
+public class RocketRepository implements SpaceRepository<Rocket> {
 
     private final Map<String, Rocket> rockets;
 
-    public RocketService() {
+    public RocketRepository() {
         rockets = new HashMap<>();
     }
 
@@ -32,25 +30,5 @@ public class RocketService implements SpaceService<Rocket> {
             throw new SpaceException("ERROR: Rocket with this name does not exists!");
         }
         return rockets.get(name);
-    }
-
-    public void assignToMission(Mission mission, Rocket rocket) {
-        rocket.assignToMission(mission);
-    }
-
-    public void unassignFromMission(Rocket rocket) {
-        rocket.unassignFromMission();
-    }
-
-    public void unassignFromMission(List<Rocket> rocket) {
-        rocket.forEach(this::unassignFromMission);
-    }
-
-    public void moveToRepair(Rocket rocket) {
-        rocket.moveToRepair();
-    }
-
-    public void moveFromRepair(Rocket rocket) {
-        rocket.moveFromRepair();
     }
 }
