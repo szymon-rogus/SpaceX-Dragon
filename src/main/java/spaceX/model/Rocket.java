@@ -1,7 +1,6 @@
 package spaceX.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import spaceX.status.RocketStatus;
 
 @Getter
