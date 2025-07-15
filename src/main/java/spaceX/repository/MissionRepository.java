@@ -4,6 +4,7 @@ import lombok.Getter;
 import spaceX.exception.SpaceException;
 import spaceX.model.Mission;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,11 @@ public class MissionRepository implements SpaceRepository<Mission> {
             throw new SpaceException("ERROR: Mission " + name + " does not exists!");
         }
         return missions.get(name);
+    }
+
+    @Override
+    public Collection<Mission> getAll() {
+        return missions.values();
     }
 
     @Override

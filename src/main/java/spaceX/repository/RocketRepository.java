@@ -4,6 +4,7 @@ import lombok.Getter;
 import spaceX.exception.SpaceException;
 import spaceX.model.Rocket;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,11 @@ public class RocketRepository implements SpaceRepository<Rocket> {
             throw new SpaceException("ERROR: Rocket " + name + " does not exists!");
         }
         return rockets.get(name);
+    }
+
+    @Override
+    public Collection<Rocket> getAll() {
+        return rockets.values();
     }
 
     @Override

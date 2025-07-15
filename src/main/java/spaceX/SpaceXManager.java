@@ -6,7 +6,9 @@ import spaceX.model.Mission;
 import spaceX.model.Rocket;
 import spaceX.repository.MissionRepository;
 import spaceX.repository.RocketRepository;
-import spaceX.service.SpaceService;
+import spaceX.repository.SpaceRepository;
+import spaceX.service.AssignService;
+import spaceX.service.RepairService;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,9 +19,9 @@ public class SpaceXManager {
 
     private final String name;
 
-    private final MissionRepository missionRepository;
+    private final SpaceRepository<Mission> missionRepository;
 
-    private final RocketRepository rocketRepository;
+    private final SpaceRepository<Rocket> rocketRepository;
 
     public SpaceXManager(String name) {
         this.name = name;
@@ -60,7 +62,7 @@ public class SpaceXManager {
             Mission mission = missionRepository.get(missionName);
             Rocket rocket = rocketRepository.get(rocketName);
 
-            SpaceService.assignRocketToMission(mission, rocket);
+            AssignService.assignRocketToMission(mission, rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -77,7 +79,7 @@ public class SpaceXManager {
             Mission mission = missionRepository.get(missionName);
             Rocket rocket = rocketRepository.get(rocketName);
 
-            SpaceService.unassignRocketFromMission(mission, rocket);
+            AssignService.unassignRocketFromMission(mission, rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -87,7 +89,7 @@ public class SpaceXManager {
         try {
             Rocket rocket = rocketRepository.get(rocketName);
 
-            SpaceService.moveRocketToRepair(rocket);
+            RepairService.moveRocketToRepair(rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -97,7 +99,7 @@ public class SpaceXManager {
         try {
             Rocket rocket = rocketRepository.get(rocketName);
 
-            SpaceService.moveRocketFromRepair(rocket);
+            RepairService.moveRocketFromRepair(rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -107,14 +109,14 @@ public class SpaceXManager {
         try {
             Mission mission = missionRepository.get(missionName);
 
-            SpaceService.endMission(mission);
+            AssignService.endMission(mission);
         } catch (SpaceException e) {
             e.logMessage();
         }
     }
 
     public List<Mission> getSummary() {
-        List<Mission> missions = new ArrayList<>(missionRepository.getMissions().values());
+        List<Mission> missions = new ArrayList<>(missionRepository.getAll());
 
         missions.sort(Comparator.comparing(Mission::getRocketCount, Comparator.reverseOrder())
                 .thenComparing(Mission::getName, Comparator.reverseOrder())
