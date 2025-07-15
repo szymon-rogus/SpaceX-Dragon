@@ -1,10 +1,73 @@
 package spaceX.service;
 
-import java.util.Map;
+import spaceX.exception.SpaceException;
+import spaceX.model.Mission;
+import spaceX.model.Rocket;
 
-public interface SpaceService<T> {
+import java.util.List;
 
-    void add(String name);
+public class SpaceService {
 
-    T get(String name);
+    public static void assignRocketToMission(Mission mission, Rocket rocket) throws SpaceException {
+        if (mission.hasEnded()) {
+            throw new SpaceException("ERROR: Mission has ended!");
+        }
+        if (!rocket.onGround()) {
+            throw new SpaceException("ERROR: Rocket is already assigned to a mission!");
+        }
+
+        rocket.assignToMission(mission);
+        mission.assignRocket(rocket);
+    }
+
+    public static void unassignRocketFromMission(Mission mission, Rocket rocket) throws SpaceException {
+        if (mission.hasEnded()) {
+            throw new SpaceException("ERROR: Mission has ended!");
+        }
+        if (rocket.onGround()) {
+            throw new SpaceException("WARNING: Rocket is unassigned, therefore it cannot be unassigned!");
+        }
+        if (rocket.inRepair()) {
+            throw new SpaceException("ERROR: Rocket has to be repaired before unassignment!");
+        }
+
+        rocket.unassignFromMission();
+        mission.unassignRocket(rocket);
+    }
+
+    public static void moveRocketToRepair(Rocket rocket) throws SpaceException{
+        Mission mission = rocket.getMission();
+
+        if (rocket.onGround()) {
+            throw new SpaceException("ERROR: Unassigned rockets cannot be moved to repair!");
+        }
+        if (rocket.inRepair()) {
+            throw new SpaceException("ERROR: Rocket is already in repair!");
+        }
+
+        rocket.moveToRepair();
+        if (mission != null) {
+            mission.updateStatus();
+        }
+    }
+
+    public static void moveRocketFromRepair(Rocket rocket) throws SpaceException {
+        Mission mission = rocket.getMission();
+
+        if (!rocket.inRepair()) {
+            throw new SpaceException("ERROR: Rocket was not in repair");
+        }
+
+        rocket.moveFromRepair();
+        if (mission != null) {
+            mission.updateStatus();
+        }
+    }
+
+    public static void endMission(Mission mission) {
+        List<Rocket> rockets = mission.getRockets();
+
+        rockets.forEach(Rocket::unassignFromMission);
+        mission.endMission();
+    }
 }
