@@ -31,4 +31,9 @@ public class MissionRepository implements SpaceRepository<Mission> {
         }
         return missions.get(name);
     }
+
+    @Override
+    public int size() {
+        return missions.size();
+    }
 }

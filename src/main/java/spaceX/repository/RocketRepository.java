@@ -31,4 +31,9 @@ public class RocketRepository implements SpaceRepository<Rocket> {
         }
         return rockets.get(name);
     }
+
+    @Override
+    public int size() {
+        return rockets.size();
+    }
 }
