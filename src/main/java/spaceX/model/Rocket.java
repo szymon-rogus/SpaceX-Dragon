@@ -42,8 +42,12 @@ public class Rocket {
         }
     }
 
-    public boolean isAssigned() {
-        return status != RocketStatus.ON_GROUND;
+    public boolean onGround() {
+        return status == RocketStatus.ON_GROUND;
+    }
+
+    public boolean inSpace() {
+        return status == RocketStatus.IN_SPACE;
     }
 
     public boolean inRepair() {
