@@ -2,7 +2,6 @@ package spaceX.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import spaceX.status.MissionStatus;
 
 public class MissionTest {
 
@@ -10,7 +9,7 @@ public class MissionTest {
     public void testInitialStatus() {
         Mission mission = new Mission("Pluto");
 
-        Assert.assertEquals(MissionStatus.SCHEDULED, mission.getStatus());
+        Assert.assertTrue(mission.isScheduled());
     }
 
     @Test
@@ -20,6 +19,7 @@ public class MissionTest {
 
         mission.assignRocket(rocket);
 
+        Assert.assertTrue(mission.inProgress());
         Assert.assertEquals(1, mission.getRocketCount());
     }
 
@@ -34,6 +34,7 @@ public class MissionTest {
         mission.assignRocket(nike);
         mission.assignRocket(hopiDart);
 
+        Assert.assertTrue(mission.inProgress());
         Assert.assertEquals(3, mission.getRocketCount());
     }
 
@@ -46,6 +47,7 @@ public class MissionTest {
 
         mission.unassignRocket(passenger);
 
+        Assert.assertFalse(mission.inProgress());
         Assert.assertTrue(mission.getRockets().isEmpty());
     }
 
@@ -64,6 +66,7 @@ public class MissionTest {
         mission.unassignRocket(delta);
         mission.unassignRocket(falcon);
 
+        Assert.assertFalse(mission.inProgress());
         Assert.assertTrue(mission.getRockets().isEmpty());
     }
 
@@ -73,28 +76,28 @@ public class MissionTest {
         Rocket atlas = new Rocket("Atlas");
         Rocket delta = new Rocket("Delta C");
 
-        Assert.assertEquals(MissionStatus.SCHEDULED, mission.getStatus());
+        Assert.assertTrue(mission.isScheduled());
 
         mission.assignRocket(atlas);
         mission.assignRocket(delta);
         mission.updateStatus();
 
-        Assert.assertEquals(MissionStatus.IN_PROGRESS, mission.getStatus());
+        Assert.assertTrue(mission.inProgress());
 
         atlas.moveToRepair();
         mission.updateStatus();
 
-        Assert.assertEquals(MissionStatus.PENDING, mission.getStatus());
+        Assert.assertTrue(mission.isPending());
 
         atlas.moveFromRepair();
         mission.updateStatus();
 
-        Assert.assertEquals(MissionStatus.IN_PROGRESS, mission.getStatus());
+        Assert.assertTrue(mission.inProgress());
 
         mission.unassignRocket(atlas);
         mission.unassignRocket(delta);
 
-        Assert.assertEquals(MissionStatus.SCHEDULED, mission.getStatus());
+        Assert.assertTrue(mission.isScheduled());
     }
 
     @Test

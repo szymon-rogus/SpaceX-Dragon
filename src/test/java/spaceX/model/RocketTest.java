@@ -2,7 +2,6 @@ package spaceX.model;
 
 import org.junit.Assert;
 import org.junit.Test;
-import spaceX.status.RocketStatus;
 
 public class RocketTest {
 

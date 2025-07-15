@@ -9,8 +9,7 @@ I wanted to divide responsibilities for different classes inside packages:
  1. **Model** - holds Mission and Rocket as simple objects
  2. **Repository** - manages Mission and Rocket (add/get)
  3. **Service** - provide actions to perform on already existing Missions and Rockets
- 4. **Status** - package with statuses for model
- 5. **Exception** - package for custom exception (for edge cases) 
+ 4. **Exception** - package for custom exception (for edge cases) 
 
 
 Assumptions

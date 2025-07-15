@@ -1,7 +1,6 @@
 package spaceX.model;
 
 import lombok.Getter;
-import spaceX.status.MissionStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +10,13 @@ public class Mission {
 
     private final String name;
 
-    private MissionStatus status;
+    private Status status;
 
     private final List<Rocket> rockets;
 
     public Mission(String name) {
         this.name = name;
-        status = MissionStatus.SCHEDULED;
+        status = Status.SCHEDULED;
         rockets = new ArrayList<>();
     }
 
@@ -32,20 +31,20 @@ public class Mission {
     }
 
     public void updateStatus() {
-        if (status == MissionStatus.ENDED) return;
+        if (status == Status.ENDED) return;
 
         if (rockets.isEmpty()) {
-            status = MissionStatus.SCHEDULED;
+            status = Status.SCHEDULED;
         } else if (hasRocketsInRepair()) {
-            status = MissionStatus.PENDING;
+            status = Status.PENDING;
         } else {
-            status = MissionStatus.IN_PROGRESS;
+            status = Status.IN_PROGRESS;
         }
     }
 
     public void endMission() {
         rockets.clear();
-        status = MissionStatus.ENDED;
+        status = Status.ENDED;
     }
 
     private boolean hasRocketsInRepair() {
@@ -57,19 +56,19 @@ public class Mission {
     }
 
     public boolean isScheduled() {
-        return status == MissionStatus.SCHEDULED;
+        return status == Status.SCHEDULED;
     }
 
     public boolean inProgress() {
-        return status == MissionStatus.IN_PROGRESS;
+        return status == Status.IN_PROGRESS;
     }
 
     public boolean isPending() {
-        return status == MissionStatus.PENDING;
+        return status == Status.PENDING;
     }
 
     public boolean hasEnded() {
-        return status == MissionStatus.ENDED;
+        return status == Status.ENDED;
     }
 
     @Override
@@ -80,5 +79,12 @@ public class Mission {
         }
 
         return builder.toString();
+    }
+
+    private enum Status {
+        SCHEDULED,
+        PENDING,
+        IN_PROGRESS,
+        ENDED
     }
 }
