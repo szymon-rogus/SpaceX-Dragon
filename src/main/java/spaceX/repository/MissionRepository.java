@@ -17,17 +17,17 @@ public class MissionRepository implements SpaceRepository<Mission> {
     }
 
     @Override
-    public void add(String missionName) {
-        if (missions.containsKey(missionName)) {
-            throw new SpaceException("ERROR: Mission already exists!");
+    public void add(String name) throws SpaceException {
+        if (missions.containsKey(name)) {
+            throw new SpaceException("ERROR: Mission " + name + " already exists!");
         }
-        missions.put(missionName, new Mission(missionName));
+        missions.put(name, new Mission(name));
     }
 
     @Override
-    public Mission get(String name) {
+    public Mission get(String name) throws SpaceException {
         if (!missions.containsKey(name)) {
-            throw new SpaceException("ERROR: Mission with this name does not exists!");
+            throw new SpaceException("ERROR: Mission " + name + " does not exists!");
         }
         return missions.get(name);
     }

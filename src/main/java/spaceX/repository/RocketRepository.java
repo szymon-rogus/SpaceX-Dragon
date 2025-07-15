@@ -17,17 +17,17 @@ public class RocketRepository implements SpaceRepository<Rocket> {
     }
 
     @Override
-    public void add(String rocketName) {
-        if (rockets.containsKey(rocketName)) {
-            throw new SpaceException("ERROR: Rocket already exists!");
+    public void add(String name) throws SpaceException {
+        if (rockets.containsKey(name)) {
+            throw new SpaceException("ERROR: Rocket " + name + " already exists!");
         }
-        rockets.put(rocketName, new Rocket(rocketName));
+        rockets.put(name, new Rocket(name));
     }
 
     @Override
-    public Rocket get(String name) {
+    public Rocket get(String name) throws SpaceException {
         if (!rockets.containsKey(name)) {
-            throw new SpaceException("ERROR: Rocket with this name does not exists!");
+            throw new SpaceException("ERROR: Rocket " + name + " does not exists!");
         }
         return rockets.get(name);
     }
