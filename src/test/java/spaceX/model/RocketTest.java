@@ -10,14 +10,15 @@ public class RocketTest {
     public void testInitialStatus() {
         Rocket rocket = new Rocket("Spider");
 
-        Assert.assertEquals(RocketStatus.ON_GROUND, rocket.getStatus());
+        Assert.assertTrue(rocket.onGround());
     }
 
     @Test
     public void testNotAssigned() {
         Rocket rocket = new Rocket("Spruce");
 
-        Assert.assertFalse(rocket.isAssigned());
+        Assert.assertFalse(rocket.inSpace());
+        Assert.assertFalse(rocket.inRepair());
     }
 
     @Test
@@ -27,7 +28,7 @@ public class RocketTest {
 
         rocket.assignToMission(mission);
 
-        Assert.assertTrue(rocket.isAssigned());
+        Assert.assertTrue(rocket.inSpace());
         Assert.assertEquals(mission, rocket.getMission());
     }
 
@@ -39,7 +40,7 @@ public class RocketTest {
         rocket.assignToMission(mission);
         rocket.unassignFromMission();
 
-        Assert.assertFalse(rocket.isAssigned());
+        Assert.assertFalse(rocket.inSpace());
         Assert.assertNotEquals(mission, rocket.getMission());
     }
 
