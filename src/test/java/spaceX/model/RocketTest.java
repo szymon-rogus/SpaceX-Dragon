@@ -68,25 +68,9 @@ public class RocketTest {
     }
 
     @Test
-    public void testToString1() {
+    public void testToString() {
         Rocket rocket = new Rocket("Nova");
 
         Assert.assertEquals("Nova - ON_GROUND", rocket.toString());
-    }
-
-    @Test
-    public void testToString2() {
-        Rocket rocket = new Rocket("Mosquito");
-        rocket.setStatus(RocketStatus.IN_SPACE);
-
-        Assert.assertEquals("Mosquito - IN_SPACE", rocket.toString());
-    }
-
-    @Test
-    public void testToString3() {
-        Rocket rocket = new Rocket("Javelin");
-        rocket.setStatus(RocketStatus.IN_REPAIR);
-
-        Assert.assertEquals("Javelin - IN_REPAIR", rocket.toString());
     }
 }

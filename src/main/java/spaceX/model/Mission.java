@@ -1,7 +1,6 @@
 package spaceX.model;
 
 import lombok.Getter;
-import lombok.Setter;
 import spaceX.status.MissionStatus;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ public class Mission {
 
     private final String name;
 
-    @Setter
     private MissionStatus status;
 
     private final List<Rocket> rockets;
@@ -47,7 +45,7 @@ public class Mission {
 
     public void endMission() {
         rockets.clear();
-        setStatus(MissionStatus.ENDED);
+        status = MissionStatus.ENDED;
     }
 
     private boolean hasRocketsInRepair() {

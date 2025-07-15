@@ -100,7 +100,6 @@ public class SpaceServiceTest {
 
     @Test
     public void testMoveRocketToRepair2() {
-        Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
         Assert.assertThrows(SpaceException.class, () -> SpaceService.moveRocketToRepair(rocket));
