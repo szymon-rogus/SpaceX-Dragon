@@ -23,10 +23,16 @@ public class SpaceXManager {
 
     private final SpaceRepository<Rocket> rocketRepository;
 
+    private final AssignService assignService;
+
+    private final RepairService repairService;
+
     public SpaceXManager(String name) {
         this.name = name;
         missionRepository = new MissionRepository();
         rocketRepository = new RocketRepository();
+        assignService = new AssignService();
+        repairService = new RepairService();
     }
 
     public void addRocket(String name) {
@@ -62,7 +68,7 @@ public class SpaceXManager {
             Mission mission = missionRepository.get(missionName);
             Rocket rocket = rocketRepository.get(rocketName);
 
-            AssignService.assignRocketToMission(mission, rocket);
+            assignService.assignRocketToMission(mission, rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -79,7 +85,7 @@ public class SpaceXManager {
             Mission mission = missionRepository.get(missionName);
             Rocket rocket = rocketRepository.get(rocketName);
 
-            AssignService.unassignRocketFromMission(mission, rocket);
+            assignService.unassignRocketFromMission(mission, rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -89,7 +95,7 @@ public class SpaceXManager {
         try {
             Rocket rocket = rocketRepository.get(rocketName);
 
-            RepairService.moveRocketToRepair(rocket);
+            repairService.moveRocketToRepair(rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -99,7 +105,7 @@ public class SpaceXManager {
         try {
             Rocket rocket = rocketRepository.get(rocketName);
 
-            RepairService.moveRocketFromRepair(rocket);
+            repairService.moveRocketFromRepair(rocket);
         } catch (SpaceException e) {
             e.logMessage();
         }
@@ -109,7 +115,7 @@ public class SpaceXManager {
         try {
             Mission mission = missionRepository.get(missionName);
 
-            AssignService.endMission(mission);
+            assignService.endMission(mission);
         } catch (SpaceException e) {
             e.logMessage();
         }

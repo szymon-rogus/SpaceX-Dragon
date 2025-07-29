@@ -1,6 +1,7 @@
 package spaceX.service;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import spaceX.exception.SpaceException;
 import spaceX.model.Mission;
@@ -8,12 +9,19 @@ import spaceX.model.Rocket;
 
 public class AssignServiceTest {
 
+    private AssignService assignService;
+
+    @Before
+    public void setUp() {
+        assignService = new AssignService();
+    }
+
     @Test
     public void testAssignRocketToMission1() {
         Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
-        AssignService.assignRocketToMission(mission, rocket);
+        assignService.assignRocketToMission(mission, rocket);
 
         Assert.assertTrue(rocket.inSpace());
         Assert.assertEquals(mission, rocket.getMission());
@@ -28,7 +36,7 @@ public class AssignServiceTest {
 
         mission.endMission();
 
-        Assert.assertThrows(SpaceException.class, () -> AssignService.assignRocketToMission(mission, rocket));
+        Assert.assertThrows(SpaceException.class, () -> assignService.assignRocketToMission(mission, rocket));
     }
 
     @Test
@@ -37,9 +45,9 @@ public class AssignServiceTest {
         Mission mission2 = new Mission("Vertical landing");
         Rocket rocket = new Rocket("Afrodita");
 
-        AssignService.assignRocketToMission(mission1, rocket);
+        assignService.assignRocketToMission(mission1, rocket);
 
-        Assert.assertThrows(SpaceException.class, () -> AssignService.assignRocketToMission(mission2, rocket));
+        Assert.assertThrows(SpaceException.class, () -> assignService.assignRocketToMission(mission2, rocket));
     }
 
     @Test
@@ -47,8 +55,8 @@ public class AssignServiceTest {
         Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
-        AssignService.assignRocketToMission(mission, rocket);
-        AssignService.unassignRocketFromMission(mission, rocket);
+        assignService.assignRocketToMission(mission, rocket);
+        assignService.unassignRocketFromMission(mission, rocket);
 
         Assert.assertFalse(rocket.inSpace());
         Assert.assertNotEquals(mission, rocket.getMission());
@@ -61,7 +69,7 @@ public class AssignServiceTest {
         Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
-        Assert.assertThrows(SpaceException.class, () -> AssignService.unassignRocketFromMission(mission, rocket));
+        Assert.assertThrows(SpaceException.class, () -> assignService.unassignRocketFromMission(mission, rocket));
     }
 
     @Test
@@ -69,10 +77,10 @@ public class AssignServiceTest {
         Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
-        AssignService.assignRocketToMission(mission, rocket);
-        RepairService.moveRocketToRepair(rocket);
+        assignService.assignRocketToMission(mission, rocket);
+        rocket.moveToRepair();
 
-        Assert.assertThrows(SpaceException.class, () -> AssignService.unassignRocketFromMission(mission, rocket));
+        Assert.assertThrows(SpaceException.class, () -> assignService.unassignRocketFromMission(mission, rocket));
     }
 
     @Test
@@ -80,10 +88,10 @@ public class AssignServiceTest {
         Mission mission = new Mission("Orbiting");
         Rocket rocket = new Rocket("Helios");
 
-        AssignService.assignRocketToMission(mission, rocket);
+        assignService.assignRocketToMission(mission, rocket);
         mission.endMission();
 
-        Assert.assertThrows(SpaceException.class, () -> AssignService.unassignRocketFromMission(mission, rocket));
+        Assert.assertThrows(SpaceException.class, () -> assignService.unassignRocketFromMission(mission, rocket));
     }
 
     @Test
@@ -93,11 +101,11 @@ public class AssignServiceTest {
         Rocket dragon2 = new Rocket("Dragon 2");
         Rocket dragon3 = new Rocket("Dragon 3");
 
-        AssignService.assignRocketToMission(mission, dragon1);
-        AssignService.assignRocketToMission(mission, dragon2);
-        AssignService.assignRocketToMission(mission, dragon3);
+        assignService.assignRocketToMission(mission, dragon1);
+        assignService.assignRocketToMission(mission, dragon2);
+        assignService.assignRocketToMission(mission, dragon3);
 
-        AssignService.endMission(mission);
+        assignService.endMission(mission);
 
         Assert.assertTrue(mission.hasEnded());
         Assert.assertTrue(dragon1.onGround());

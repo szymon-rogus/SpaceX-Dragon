@@ -6,7 +6,7 @@ import spaceX.model.Rocket;
 
 public class RepairService {
 
-    public static void moveRocketToRepair(Rocket rocket) throws SpaceException {
+    public void moveRocketToRepair(Rocket rocket) throws SpaceException {
         Mission mission = rocket.getMission();
 
         if (rocket.onGround()) {
@@ -22,7 +22,7 @@ public class RepairService {
         }
     }
 
-    public static void moveRocketFromRepair(Rocket rocket) throws SpaceException {
+    public void moveRocketFromRepair(Rocket rocket) throws SpaceException {
         Mission mission = rocket.getMission();
 
         if (!rocket.inRepair()) {

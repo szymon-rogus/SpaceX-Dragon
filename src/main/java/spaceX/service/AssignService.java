@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AssignService {
 
-    public static void assignRocketToMission(Mission mission, Rocket rocket) throws SpaceException {
+    public void assignRocketToMission(Mission mission, Rocket rocket) throws SpaceException {
         if (mission.hasEnded()) {
             throw new SpaceException("ERROR: Mission has ended!");
         }
@@ -20,7 +20,7 @@ public class AssignService {
         mission.assignRocket(rocket);
     }
 
-    public static void unassignRocketFromMission(Mission mission, Rocket rocket) throws SpaceException {
+    public void unassignRocketFromMission(Mission mission, Rocket rocket) throws SpaceException {
         if (mission.hasEnded()) {
             throw new SpaceException("ERROR: Mission has ended!");
         }
@@ -35,7 +35,7 @@ public class AssignService {
         mission.unassignRocket(rocket);
     }
 
-    public static void endMission(Mission mission) {
+    public void endMission(Mission mission) {
         List<Rocket> rockets = mission.getRockets();
 
         rockets.forEach(Rocket::unassignFromMission);
